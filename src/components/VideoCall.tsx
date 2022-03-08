@@ -3,6 +3,7 @@ import {
     IAgoraRTCRemoteUser,
 } from "agora-rtc-react"
 import { useClient, useMicrophoneAndCameraTracks } from "../client";
+import Controls from "./Controls";
 const VideoCall = (props: {
     setInCall: React.Dispatch<React.SetStateAction<boolean>>;
     channelName: string;
@@ -12,11 +13,17 @@ const VideoCall = (props: {
     const [start, setStart] = useState<boolean>(false);
     // using the hook to get access to the client object
     const client = useClient();
-    const {ready, tracks} = useMicrophoneAndCameraTracks();
+    const { ready, tracks } = useMicrophoneAndCameraTracks();
 
     return (
-        <div>
-            Ini Component Video Call
+        <div className="App">
+            {ready && tracks && (
+                // <div>Video Call Control</div>
+                <Controls setInCall={setInCall} tracks={tracks} setStart={setStart} />
+            )}
+            {start && tracks && (
+                <div>Video Cam</div>
+            )}
         </div>
     )
 }
